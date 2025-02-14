@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
-import { Card, Icon, Image, Button, Label, Grid } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-import { useAuthContext } from '@asgardeo/auth-react';
+import React, { useState } from 'react'
+import { Card, Icon, Image, Button, Label, Grid } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
+import { useAuthContext } from '@asgardeo/auth-react'
 
-function ItemCard({ cardItem, isAuthenticated, loggedInUserId, cart, handleAddToCart, handleRemoveFromCart }) {
-  const [item, setStateItem] = useState(cardItem);
-  const imageUrl = item.imageUrl || 'https://via.placeholder.com/150';
-  const baseUrl = process.env.REACT_APP_RESOURCE_SERVER_URL;
-  const { httpRequest } = useAuthContext();
+function ItemCard({
+  cardItem,
+  isAuthenticated,
+  loggedInUserId,
+  cart,
+  handleAddToCart,
+  handleRemoveFromCart,
+}) {
+  const [item, setStateItem] = useState(cardItem)
+  const imageUrl = item.imageUrl || 'https://via.placeholder.com/150'
+  const baseUrl = process.env.REACT_APP_RESOURCE_SERVER_URL
+  const { httpRequest } = useAuthContext()
 
   //  define userid and subscription request config
   var subscription = {
     userId: loggedInUserId,
-    itemId: item.id
+    itemId: item.id,
   }
 
   const handleLikeClick = async () => {
@@ -20,57 +27,57 @@ function ItemCard({ cardItem, isAuthenticated, loggedInUserId, cart, handleAddTo
       // define delete request config
       const deleteRequestConfig = {
         headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*,http://localhost:3000"
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*,http://localhost:3000',
         },
-        method: "DELETE",
+        method: 'DELETE',
         url: baseUrl + '/subscriptions/' + item.id,
-        withCredentials: false
-      };
+        withCredentials: false,
+      }
 
       httpRequest(deleteRequestConfig)
         .then((response) => {
-          console.log(response);
-          setStateItem((prevState) => ({ ...prevState, isSubscribed: false }));
+          console.log(response)
+          setStateItem((prevState) => ({ ...prevState, isSubscribed: false }))
         })
         .catch((error) => {
-          console.error(error);
-        });
+          console.error(error)
+        })
     } else {
       // define post request config
       const postRequestConfig = {
         headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*,http://localhost:3000"
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*,http://localhost:3000',
         },
-        method: "POST",
+        method: 'POST',
         url: baseUrl + '/subscriptions',
         data: subscription,
-        withCredentials: false
-      };
+        withCredentials: false,
+      }
 
       httpRequest(postRequestConfig)
         .then((response) => {
-          console.log(response);
-          setStateItem((prevState) => ({ ...prevState, isSubscribed: true }));
+          console.log(response)
+          setStateItem((prevState) => ({ ...prevState, isSubscribed: true }))
         })
         .catch((error) => {
-          console.error(error);
-        });
+          console.error(error)
+        })
     }
-  };
+  }
 
   //function to handle Add to card button click
   const handleAddToCartClick = async () => {
-    console.log("Add to cart button clicked for item: " + item.id);
-    handleAddToCart(item);
-  };
+    console.log('Add to cart button clicked for item: ' + item.id)
+    handleAddToCart(item)
+  }
 
   // function to handle Remove from Cart button click
   const handleRemoveFromCartClick = async () => {
-    console.log("Remove from cart button clicked for item: " + item.id);
-    handleRemoveFromCart(item.id);
-  };
+    console.log('Remove from cart button clicked for item: ' + item.id)
+    handleRemoveFromCart(item.id)
+  }
 
   //write a inline component to retun the like button if the user is authenticated
   const Operators = () => {
@@ -80,33 +87,37 @@ function ItemCard({ cardItem, isAuthenticated, loggedInUserId, cart, handleAddTo
           <Grid.Column>
             {item.isSubscribed ? (
               <Button onClick={handleLikeClick}>
-                <Icon name='thumbs up' />
+                <Icon name="thumbs up" />
                 Following
               </Button>
             ) : (
               <Button onClick={handleLikeClick}>
-                <Icon name='thumbs up outline' />
+                <Icon name="thumbs up outline" />
                 Follow
               </Button>
             )}
           </Grid.Column>
           <Grid.Column>
             {cart.find((cartItem) => cartItem.id === item.id) ? (
-              <Button color='yellow' floated='green' onClick={handleRemoveFromCartClick}>
-                <Icon name='cart arrow down' />
+              <Button
+                color="yellow"
+                floated="green"
+                onClick={handleRemoveFromCartClick}
+              >
+                <Icon name="cart arrow down" />
                 Remove
               </Button>
             ) : (
-              <Button primary floated='right' onClick={handleAddToCartClick}>
-                <Icon name='cart plus' />
+              <Button primary floated="right" onClick={handleAddToCartClick}>
+                <Icon name="cart plus" />
                 Add to Cart
               </Button>
             )}
           </Grid.Column>
         </>
-      );
+      )
     }
-  };
+  }
 
   return (
     <Card>
@@ -123,13 +134,15 @@ function ItemCard({ cardItem, isAuthenticated, loggedInUserId, cart, handleAddTo
         <p>Material: {item.material}</p>
       </Card.Content>
       <Card.Content extra>
-        <Card.Header color='orange' as='h3'>${item.price}</Card.Header>
+        <Card.Header color="orange" as="h3">
+          ${item.price}
+        </Card.Header>
         <Grid columns={2}>
           <Operators />
         </Grid>
       </Card.Content>
     </Card>
-  );
+  )
 }
 
-export default ItemCard;
+export default ItemCard

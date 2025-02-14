@@ -1,37 +1,37 @@
-import React, { useState } from 'react';
-import { Table, Icon, Input, Container, Button } from 'semantic-ui-react';
-import PaymentModal from './PaymentModal';
+import React, { useState } from 'react'
+import { Table, Icon, Input, Container, Button } from 'semantic-ui-react'
+import PaymentModal from './PaymentModal'
 
 function Cart({ cart, removeFromCart }) {
-  const [quantities, setQuantities] = useState({});
-  const [showModal, setShowModal] = useState(false);
+  const [quantities, setQuantities] = useState({})
+  const [showModal, setShowModal] = useState(false)
 
   const handleQuantityChange = (itemId, event) => {
-    const newQuantities = { ...quantities };
-    newQuantities[itemId] = event.target.value;
-    setQuantities(newQuantities);
-  };
+    const newQuantities = { ...quantities }
+    newQuantities[itemId] = event.target.value
+    setQuantities(newQuantities)
+  }
 
   const getItemTotal = (item) => {
-    const quantity = parseInt(quantities[item.id]) || 1;
-    return quantity * item.price;
-  };
+    const quantity = parseInt(quantities[item.id]) || 1
+    return quantity * item.price
+  }
 
   const getTotal = () => {
-    let total = 0;
+    let total = 0
     for (const item of cart) {
-      total += getItemTotal(item);
+      total += getItemTotal(item)
     }
-    return total;
-  };
+    return total
+  }
 
   const handleCheckoutClick = () => {
-    setShowModal(true);
-  };
+    setShowModal(true)
+  }
 
   const handlePaymentModalClose = () => {
-    setShowModal(false);
-  };
+    setShowModal(false)
+  }
 
   return (
     <Container>
@@ -83,7 +83,7 @@ function Cart({ cart, removeFromCart }) {
         Checkout
       </Button>
     </Container>
-  );
+  )
 }
 
-export default Cart;
+export default Cart

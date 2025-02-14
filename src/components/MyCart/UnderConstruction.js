@@ -1,18 +1,19 @@
-import React from 'react';
-import { Container, Header, Icon } from 'semantic-ui-react';
+import React from 'react'
+import { Container, Header, Icon } from 'semantic-ui-react'
 
 function UnderConstruction() {
   return (
-    <Container textAlign='center'>
+    <Container textAlign="center">
       <Header icon>
-        <Icon name='wrench' />
+        <Icon name="wrench" />
         Under Construction
       </Header>
       <p>
-        This page is currently under construction. Please check back soon for updates.
+        This page is currently under construction. Please check back soon for
+        updates.
       </p>
     </Container>
-  );
+  )
 }
 
-export default UnderConstruction;
+export default UnderConstruction
