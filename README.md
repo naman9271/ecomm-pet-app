@@ -63,6 +63,7 @@ cd ecomm-pet-app
 ### **2. Install Dependencies**
 ```sh
 npm install
+cd ecomm-pet-app
 ```
 
 ### **3. Start the Development Server**
